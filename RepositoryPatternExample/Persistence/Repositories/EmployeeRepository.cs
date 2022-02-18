@@ -12,7 +12,7 @@ namespace RepositoryPatternExample.Persistence.Repositories
 
         public IEnumerable<Employee> GetOldestEmployees(int count)
         {
-            return EmployeeDBContext.Employees.OrderByDescending(c => c.age).Take(count).ToList();
+            return EmployeeDBContext.Employees.OrderByDescending(c => c.Age).Take(count).ToList();
         }
 
         public EmployeeDBContext EmployeeDBContext
