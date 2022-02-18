@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Queries.Persistence;
+using RepositoryPatternExample.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Configuring in memory database.
-builder.Services.AddDbContext<PlutoContext>(context => { context.UseInMemoryDatabase("Plutos"); });
+builder.Services.AddDbContext<EmployeeDBContext>(context => { context.UseInMemoryDatabase("Employees"); });
 
 var app = builder.Build();
 

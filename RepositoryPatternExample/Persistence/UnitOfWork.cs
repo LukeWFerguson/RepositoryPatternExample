@@ -1,24 +1,33 @@
-﻿using Queries.Core;
-using Queries.Core.Repositories;
-using Queries.Persistence.Repositories;
+﻿using RepositoryPatternExample.Core.Repositories;
+using RepositoryPatternExample.Persistence.Repositories;
 
-namespace Queries.Persistence
+namespace RepositoryPatternExample.Persistence
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IDisposable
     {
-        private readonly PlutoContext _context;
+        private EmployeeDBContext _context;
+        private IEmployeeRepository employees;
 
-        public UnitOfWork(PlutoContext context)
+        public UnitOfWork(EmployeeDBContext employeeDBContext)
         {
-            _context = context;
-            Courses = new CourseRepository(_context);
-            Authors = new AuthorRepository(_context);
+            _context = employeeDBContext;
         }
 
-        public ICourseRepository Courses { get; private set; }
-        public IAuthorRepository Authors { get; private set; }
+        public IEmployeeRepository Employees
+        {
+            get
+            {
 
-        public int Complete()
+                if (this.employees == null)
+                {
+                    this.employees = new EmployeeRepository(_context);
+                }
+
+                return employees;
+            }
+        }
+
+        public int Save()
         {
             return _context.SaveChanges();
         }
